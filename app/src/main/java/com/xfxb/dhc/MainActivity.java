@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static com.xfxb.dhc.BitmapUtil.CORNER_ALL;
+import static com.xfxb.dhc.BitmapUtil.drawableToBitmap;
 import static com.xfxb.dhc.FSelector.State.STATE_PRESSED;
+import static com.xfxb.dhc.RoundedBitmapDrawable.CORNER_NONE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,11 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SelectDrawable selectDrawable = new SelectDrawable();
         selectDrawable.setmStrokeWidth(dp2px(1));
         selectDrawable.setmRoundC(dp2px(5));
+        RoundedBitmapDrawable shapeBitmapDrawable=       new RoundedBitmapDrawable
+                (drawableToBitmap(this.getResources().getDrawable(R.drawable
+                        .ic_launcher_background)),25,CORNER_ALL);
         FSelector.with(tvtext1)
                 .addDrawable().circleAngle(5).bgColor(R.color.clr_f6f6f6)
                 .storkeWidth(1).strokeClr(R.color.clr_cdcdcd).create()
-                .addDrawable(STATE_PRESSED).circleAngle(15).stateDraw(this.getResources()
-                .getDrawable(R.drawable.ic_launcher_background)).create()
+                .addDrawable(STATE_PRESSED).circleAngle(15).stateDraw(shapeBitmapDrawable)
+                .storkeWidth(1).strokeClr(R.color.clr_cdcdcd).create()
                 .bind();
     }
     private void initTwo() {

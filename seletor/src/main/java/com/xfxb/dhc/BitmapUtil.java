@@ -119,10 +119,18 @@ public class BitmapUtil {
             canvas.drawARGB(Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT);
             Paint strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             strokePaint.setStyle(Paint.Style.STROKE);
+            strokePaint.setDither(true);
             strokePaint.setStrokeWidth(strokeWidth);
 //            if (strokeStateColor!=0)
             strokePaint.setColor(strokeStateColor);
             strokePaint.setColorFilter(null);
+            Paint mLayerPaint;
+                mLayerPaint = new Paint();
+            mLayerPaint.setDither(true);
+            mLayerPaint.setColorFilter(null);
+            mLayerPaint.setColor(Color.GREEN);
+            float rad1 = strokePaint.getStrokeWidth();
+
 //            if (state.mStrokeDashWidth != 0.0f) {
 //                final DashPathEffect e = new DashPathEffect(
 //                        new float[] { state.mStrokeDashWidth, state.mStrokeDashGap }, 0);
@@ -139,14 +147,16 @@ public class BitmapUtil {
 //            mPath.addRoundRect(mRect, mRadiusArray, Path.Direction.CW);
 
 
-
+            canvas.drawRect(mRect.left - rad1-10, mRect.top - rad1-10,
+                    mRect.right + rad1+10, mRect.bottom + rad1+10,
+                    mLayerPaint);
+            canvas.save();
 
 //            final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //            paint.setAntiAlias(true);
 //            paint.setColorFilter(null);
 //            paint.setColor(Color.BLACK);
-
-
+//            paint.setDither(true);
 
 
 
@@ -188,22 +198,22 @@ public class BitmapUtil {
         }
     }
 
-    private static void clipTopLeft(final Canvas canvas, final Paint paint, int offset, int width, int height) {
+    public static void clipTopLeft(final Canvas canvas, final Paint paint, int offset, int width, int height) {
         final Rect block = new Rect(0, 0, offset, offset);
         canvas.drawRect(block, paint);
     }
 
-    private static void clipTopRight(final Canvas canvas, final Paint paint, int offset, int width, int height) {
+    public static void clipTopRight(final Canvas canvas, final Paint paint, int offset, int width, int height) {
         final Rect block = new Rect(width - offset, 0, width, offset);
         canvas.drawRect(block, paint);
     }
 
-    private static void clipBottomLeft(final Canvas canvas, final Paint paint, int offset, int width, int height) {
+    public static void clipBottomLeft(final Canvas canvas, final Paint paint, int offset, int width, int height) {
         final Rect block = new Rect(0, height - offset, offset, height);
         canvas.drawRect(block, paint);
     }
 
-    private static void clipBottomRight(final Canvas canvas, final Paint paint, int offset, int width, int height) {
+    public static void clipBottomRight(final Canvas canvas, final Paint paint, int offset, int width, int height) {
         final Rect block = new Rect(width - offset, height - offset, width, height);
         canvas.drawRect(block, paint);
     }
@@ -264,7 +274,10 @@ public class BitmapUtil {
     }
     public static Drawable runodDrawable(Drawable drawable, int roundPx,int strokeWidth) {
         Bitmap oldbmp = drawableToBitmap(drawable);
-        return new BitmapDrawable(  fillet(oldbmp,roundPx,CORNER_ALL,strokeWidth,Color.RED));
+        BitmapDrawable bitmapDrawable=      new BitmapDrawable(  fillet(oldbmp,roundPx,
+                CORNER_ALL,strokeWidth,
+                Color.RED));
+        return bitmapDrawable;
     }
 
 }

@@ -16,7 +16,7 @@ import android.graphics.drawable.GradientDrawable;
  * 描述	      自定义的背景
  */
 
-public class SelectDrawable extends GradientDrawable {
+public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
     private Paint mPaint;
     private Path path;
     private Path path2;
@@ -32,8 +32,13 @@ public class SelectDrawable extends GradientDrawable {
         init();
     }
 
+    public SelectDrawable(Orientation orientation, int[] colors) {
+        super(orientation, colors);
+        init();
+    }
 
-    private void init() {
+    @Override
+    public void init() {
         pfd = new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setAntiAlias(true);
