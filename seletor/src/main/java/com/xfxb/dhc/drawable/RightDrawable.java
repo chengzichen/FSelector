@@ -1,5 +1,8 @@
-package com.xfxb.dhc;
+package com.xfxb.dhc.drawable;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,13 +13,15 @@ import android.graphics.RectF;
 import android.graphics.Region;
 import android.graphics.drawable.GradientDrawable;
 
+import com.xfxb.dhc.IDrawDelegate;
+
 /**
  * 创建者     邓浩宸
  * 创建时间   2017/10/27 13:58
  * 描述	      自定义的背景
  */
 
-public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
+public class RightDrawable extends GradientDrawable implements IDrawDelegate {
     private Paint mPaint;
     private Path path;
     private Path path2;
@@ -27,12 +32,13 @@ public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
     private int mWidth;
     private  float mRoundC;
     private float mStrokeWidth;
-
-    public SelectDrawable() {
+    private float mPantWidth;
+    private int mStrokeColor;
+    public RightDrawable() {
         init();
     }
 
-    public SelectDrawable(Orientation orientation, int[] colors) {
+    public RightDrawable(Orientation orientation, int[] colors) {
         super(orientation, colors);
         init();
     }
@@ -48,24 +54,14 @@ public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
         invalidateSelf();
     }
 
-    public float getmRoundC() {
-        return mRoundC;
-    }
 
-    public void setmRoundC(float mRoundC) {
-        this.mRoundC = mRoundC;
-    }
-
-    public float getmStrokeWidth() {
-        return mStrokeWidth;
-    }
-
-    public void setmStrokeWidth(float mStrokeWidth) {
-        this.mStrokeWidth = mStrokeWidth;
+    public void setmPantWidth(float mPantWidth) {
+        this.mPantWidth = mPantWidth;
     }
 
     @Override
     protected void onBoundsChange(Rect r) {
+        buildPathIfDirty();
         super.onBoundsChange(r);
     }
 
@@ -75,7 +71,7 @@ public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
         canvas.setDrawFilter(pfd);
         mHeight = getBounds().height();
         mWidth = getBounds().width();
-        mPaint.setColor(Color.parseColor("#fb720e"));
+        mPaint.setColor(mStrokeColor);
         mPaint.setStyle(Paint.Style.FILL);
         rectF.set(getpx(), getpx(), mWidth - getpx(), mHeight - getpx());
         path.addRoundRect(rectF,  mRoundC, mRoundC, Path.Direction.CW);
@@ -88,7 +84,7 @@ public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
         canvas.save();
         path.reset();
         mPaint.setColor(Color.WHITE);
-        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStrokeWidth(mPantWidth);
         mPaint.setStyle(Paint.Style.STROKE);
         path.moveTo(mWidth - mHeight * 0.45f * 0.55f, mHeight * 0.84f);
         path.lineTo(mWidth - mHeight * 0.45f * 0.42f, mHeight * 0.95f - getpx());
@@ -98,7 +94,44 @@ public class SelectDrawable extends GradientDrawable implements IDrawDelegate{
     }
 
     private float getpx() {
-        return mStrokeWidth-0.3f;
+        return mStrokeWidth*0.85f;
+    }
+
+
+    private boolean ensureValidRect() {
+        Rect bounds = getBounds();
+        float inset = 0;
+        rectF.set(bounds.left + inset, bounds.top + inset,
+                bounds.right - inset, bounds.bottom - inset);
+        return !rectF.isEmpty();
+    }
+
+    @SuppressLint("NewApi")
+    private void buildPathIfDirty() {
+        float[] cornerRadii  =getCornerRadii();
+        if (cornerRadii!= null) {
+            mRoundC=cornerRadii.length==8?cornerRadii[6]:cornerRadii[3];
+        } else if (getCornerRadius() > 0.0f) {
+            mRoundC= getCornerRadius();
+        } else {
+            mRoundC=0;
+        }
+        ensureValidRect();
+    }
+
+    @Override
+    public void setStroke(int width, int color, float dashWidth, float dashGap) {
+        mStrokeWidth = width;
+        mStrokeColor=color;
+        super.setStroke(width, color, dashWidth, dashGap);
+    }
+
+    @Override
+    public void setStroke(int width, ColorStateList colorStateList, float dashWidth, float dashGap) {
+        mStrokeWidth = width;
+        final int[] stateSet = getState();
+        mStrokeColor = colorStateList.getColorForState(stateSet, 0);
+        super.setStroke(width, colorStateList, dashWidth, dashGap);
     }
 
 }

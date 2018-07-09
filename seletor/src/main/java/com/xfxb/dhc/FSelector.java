@@ -199,20 +199,18 @@ public class FSelector {
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle,
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle};
             //把圆角设置成dp对应的px
-            for (int i = 0; i < circleAngleArr.length; i++) {
-                circleAngleArr[i] = dp2px(circleAngleArr[i]);
-            }
+//            for (int i = 0; i < circleAngleArr.length; i++) {
+//                circleAngleArr[i] = dp2px(circleAngleArr[i]);
+//            }
             if (mStateDraw == null) {
                 mStateDraw = new GradientDrawable();
             }
             if (mStateDraw instanceof GradientDrawable){
                 ((GradientDrawable) mStateDraw).setCornerRadii(circleAngleArr);//圆角
-                ((GradientDrawable) mStateDraw).setColor(mBgColor != 0 ? getColors(mBgColor) : 0); //背景色
+                ((GradientDrawable) mStateDraw).setColor(mBgColor != 0 ?mBgColor : 0); //背景色
                 if (mStorkeWidth != 0 || mStrokeClr != 0) {
-                    (  (GradientDrawable) mStateDraw).setStroke(dp2px(mStorkeWidth), mStrokeClr != 0 ? getColors(mStrokeClr) : 0);
+                    (  (GradientDrawable) mStateDraw).setStroke(mStorkeWidth, mStrokeClr != 0 ? mStrokeClr : 0);
                 }
-            }else{
-                mStateDraw= BitmapUtil. runodDrawable(mStateDraw,mCircleAngle,mStorkeWidth);
             }
             //边框宽度，边框颜色
             int[] states = new int[mState.size()];
@@ -225,20 +223,6 @@ public class FSelector {
         }
 
 
-    }
-
-    private int dp2px(double dpValue) {
-        float density = mContext.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * (double) density + 0.5D);
-    }
-
-
-    private int getColors(int color) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            return mContext.getColor(color);
-        } else {
-            return mContext.getResources().getColor(color);
-        }
     }
 
 
