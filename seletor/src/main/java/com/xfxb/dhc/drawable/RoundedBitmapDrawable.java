@@ -16,7 +16,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.GradientDrawable;
-
+/**
+ * @creator：denghc(desoce)
+ * @updateTime：2018/7/9 19:30
+ * @description： 自定义Bitmap转Drawable
+ */
 public  class RoundedBitmapDrawable extends GradientDrawable {
 
     private int mStrokWidth;
