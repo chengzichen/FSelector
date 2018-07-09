@@ -24,7 +24,7 @@ FSelector  quick get Selector  by no xml
 
 ## 安装
 
- [![](https://jitpack.io/v/chengzichen/KrGallery.svg)](https://jitpack.io/#chengzichen/KrGallery) [ ![Download](https://api.bintray.com/packages/chengzichen/maven/gallerylib/images/download.svg) ](https://bintray.com/chengzichen/maven/gallerylib/_latestVersion)
+[![](https://www.jitpack.io/v/chengzichen/FSelector.svg)](https://www.jitpack.io/#chengzichen/FSelector)
 
 - 方式一:
 
