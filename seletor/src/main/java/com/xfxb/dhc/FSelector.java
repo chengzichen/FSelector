@@ -198,10 +198,6 @@ public class FSelector {
                     mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle,
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle};
-            //把圆角设置成dp对应的px
-//            for (int i = 0; i < circleAngleArr.length; i++) {
-//                circleAngleArr[i] = dp2px(circleAngleArr[i]);
-//            }
             if (mStateDraw == null) {
                 mStateDraw = new GradientDrawable();
             }
