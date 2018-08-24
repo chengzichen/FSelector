@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="圆角背景: "
             android:textSize="16sp" />
 
         <View
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="圆角带边框: "
             android:textSize="16sp" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="圆角选择器: "
             android:textSize="16sp" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="圆角带边框选择器: "
             android:textSize="16sp" />
 
         <TextView
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="圆角带边框虚线选择器: "
             android:textSize="16sp" />
 
         <TextView
@@ -126,11 +126,32 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
-            android:text="RightSelectDrawable: "
+            android:text="自定义背景选择器: "
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_text6"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="用点力" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"
+            android:text="自定义背景选择器: "
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_text7"
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:gravity="center"

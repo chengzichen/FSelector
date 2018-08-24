@@ -1,11 +1,9 @@
 package com.xfxb.dhc;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.view.View;
 
@@ -116,16 +114,17 @@ public class FSelector {
 
     public class DrawableBuilder {
 
-        private DrawableWrapper gradientDrawableWraper;
+        private DrawableWrapper gradientDrawableWrapper;
         private Drawable mStateDraw;
         private int mBgColor;
         private int mTopLeftCA;
-        private int mTopRigthCA;
+        private int mTopRightCA;
         private int mBtLeftCA;
         private int mBtRightCA;
-        private int mStorkeWidth;
+        private int mStokeWidth;
         private int mStrokeClr;
-
+        private int mStrokeDashWidth;
+        private int mStrokeDashGap;
         private int mCircleAngle;
         private List<State> mState = new ArrayList<>();
 
@@ -137,63 +136,134 @@ public class FSelector {
 
         }
 
+        /**
+         * 设置  drawable
+         * @param drawable  自定义drawable
+         * @return
+         */
         public DrawableBuilder stateDraw(Drawable drawable) {
             this.mStateDraw = drawable;
             return this;
         }
 
-        public DrawableBuilder addState(State state) {
+        /**
+         * 当前 drawable 的显示状态
+         * @param state
+         * @return
+         */
+            public DrawableBuilder addState(State state) {
             this.mState.add(state);
             return this;
         }
 
+        /**
+         * 背景颜色
+         * @param bgColor
+         * @return
+         */
         public DrawableBuilder bgColor(int bgColor) {
             this.mBgColor = bgColor;
             return this;
         }
 
+        /**
+         * 左上角弧度
+         * @param topLeftCA 值
+         * @return
+         */
         public DrawableBuilder topLeftCA(int topLeftCA) {
             this.mTopLeftCA = topLeftCA;
             return this;
         }
 
+        /**
+         * 右上角弧度
+         * @param topRigthCA 值
+         * @return
+         */
         public DrawableBuilder topRigthCA(int topRigthCA) {
-            this.mTopRigthCA = topRigthCA;
+            this.mTopRightCA = topRigthCA;
             return this;
         }
 
+        /**
+             * 左下角度
+         * @param btLeftCA 值
+         * @return
+         */
         public DrawableBuilder btLeftCA(int btLeftCA) {
             this.mBtLeftCA = btLeftCA;
             return this;
         }
 
+        /**
+         * 右下角
+         * @param btRightCA 值
+         * @return
+         */
         public DrawableBuilder btRightCA(int btRightCA) {
             this.mBtRightCA = btRightCA;
             return this;
         }
 
-        public DrawableBuilder storkeWidth(int storkeWidth) {
-            this.mStorkeWidth = storkeWidth;
+        /**
+         * 边框线的宽度
+         * @param stokeWidth  宽度
+         * @return
+         */
+        public DrawableBuilder stokeWidth(int stokeWidth) {
+            this.mStokeWidth = stokeWidth;
             return this;
         }
 
+        /**
+         * 边框线的颜色
+         * @param strokeClr  颜色
+         * @return
+         */
         public DrawableBuilder strokeClr(int strokeClr) {
             this.mStrokeClr = strokeClr;
             return this;
         }
 
+        /**圆角弧度
+         *
+         * @param circleAngle  弧度
+         * @return
+         */
         public DrawableBuilder circleAngle(int circleAngle) {
             this.mCircleAngle = circleAngle;
             return this;
         }
+
+        /**
+         * 虚线中实线的长度
+         * @param strokeDashWidth
+         * @return
+         */
+        public DrawableBuilder strokeDashWidth(int strokeDashWidth) {
+            this.mStrokeDashWidth = strokeDashWidth;
+            return this;
+        }
+
+        /**
+         * 虚线间隔的长度
+         * @param strokeDashGap
+         * @return
+         */
+        public DrawableBuilder strokeDashGap(int strokeDashGap) {
+            this.mStrokeDashGap = strokeDashGap;
+            return this;
+        }
+
 
         public FSelector create() {
             //把边框值设置成dp对应的px
 
             float[] circleAngleArr = {mTopLeftCA != 0 ? mTopLeftCA : mCircleAngle,
                     mTopLeftCA != 0 ? mTopLeftCA : mCircleAngle,
-                    mTopRigthCA != 0 ? mTopRigthCA : mCircleAngle,
-                    mTopRigthCA != 0 ? mTopRigthCA : mCircleAngle,
+                    mTopRightCA != 0 ? mTopRightCA : mCircleAngle,
+                    mTopRightCA != 0 ? mTopRightCA : mCircleAngle,
                     mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
                     mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle,
@@ -204,8 +274,8 @@ public class FSelector {
             if (mStateDraw instanceof GradientDrawable){
                 ((GradientDrawable) mStateDraw).setCornerRadii(circleAngleArr);//圆角
                 ((GradientDrawable) mStateDraw).setColor(mBgColor != 0 ?mBgColor : 0); //背景色
-                if (mStorkeWidth != 0 || mStrokeClr != 0) {
-                    (  (GradientDrawable) mStateDraw).setStroke(mStorkeWidth, mStrokeClr != 0 ? mStrokeClr : 0);
+                if (mStokeWidth != 0 || mStrokeClr != 0) {
+                    (  (GradientDrawable) mStateDraw).setStroke(mStokeWidth, mStrokeClr != 0 ? mStrokeClr : 0,mStrokeDashWidth,mStrokeDashGap);
                 }
             }
             //边框宽度，边框颜色
@@ -213,8 +283,8 @@ public class FSelector {
             for (int i = 0; i < mState.size(); i++) {
                 states[i] = mState.get(i).getValue();
             }
-            gradientDrawableWraper = new DrawableWrapper(states, mStateDraw);
-            selector.stateDrawableMap.add(states.length == 0 ? selector.stateDrawableMap.size() : 0,gradientDrawableWraper);
+            gradientDrawableWrapper = new DrawableWrapper(states, mStateDraw);
+            selector.stateDrawableMap.add(states.length == 0 ? selector.stateDrawableMap.size() : 0, gradientDrawableWrapper);
             return selector;
         }
 
