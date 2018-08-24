@@ -27,7 +27,7 @@ FSelector  quick get Selector  by no xml
 ## 安装
 
 模块|FSelector
----|---|---
+---|---
 最新版本|[![](https://www.jitpack.io/v/chengzichen/FSelector.svg)](https://www.jitpack.io/#chengzichen/FSelector)
 
 
@@ -214,14 +214,14 @@ FSelector  quick get Selector  by no xml
    
 	- **FSelector**
 
- ``` 
-  FSelector.with(tvtext4)
-                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
-                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
-                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_fffcf7))
-                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_fb720e)).create()
-                .bind();
- ``` 
+	 ``` 
+	  FSelector.with(tvtext4)
+	                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
+	                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
+	                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_fffcf7))
+	                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_fb720e)).create()
+	                .bind();
+	 ``` 
 
 - 圆角虚线选择器
  	
@@ -281,16 +281,17 @@ FSelector  quick get Selector  by no xml
  	- 背景带✔️的背景选择器
 
 	``` 
- RightDrawable selectDrawable = new RightDrawable();
-        selectDrawable.setmPantWidth(dp2px(1));
-        FSelector.with(tvtext6)
-                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
-                .strokeDashWidth(dp2px(10))
-                .strokeDashGap(dp2px(5))
-                .stokeWidth(dp2px(3)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
-                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).stateDraw(selectDrawable)
-                .stokeWidth(dp2px(3)).strokeClr(Color.RED).create()
-                .bind();
+	
+	 RightDrawable selectDrawable = new RightDrawable();
+	        selectDrawable.setmPantWidth(dp2px(1));
+	        FSelector.with(tvtext6)
+	                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
+	                .strokeDashWidth(dp2px(10))
+	                .strokeDashGap(dp2px(5))
+	                .stokeWidth(dp2px(3)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
+	                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).stateDraw(selectDrawable)
+	                .stokeWidth(dp2px(3)).strokeClr(Color.RED).create()
+	                .bind();
 	``` 
 
  	 - 任何图片背景生成圆角
