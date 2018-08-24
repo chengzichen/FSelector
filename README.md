@@ -51,7 +51,7 @@ FSelector  quick get Selector  by no xml
 **step2 添加依赖:**
 
 	dependencies {
-        	        implementation 'com.github.chengzichen:FSelector:release1.0.0'
+        	        implementation 'com.github.chengzichen:FSelector:release1.0.1'
         	}
 
 
