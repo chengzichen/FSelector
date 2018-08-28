@@ -218,12 +218,12 @@ FSelector  quick get Selector  by no xml
 - **创建一个选择器 Drawable**
 
 	```
-Drawable drawable= FSelector.with(tvtext4)
-                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
-                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
-                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_fffcf7))
-                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_fb720e)).create()
-                .build();
+	Drawable drawable= FSelector.with(tvtext4)
+	                .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
+	                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
+	                .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_fffcf7))
+	                .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_fb720e)).create()
+	                .build();
 	```	
 
 ### API说明
