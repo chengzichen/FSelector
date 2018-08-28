@@ -9,21 +9,29 @@ import android.graphics.drawable.Drawable;
  */
 public class DrawableWrapper {
 
-    private int[] states;
-
+    private int[] mStates;
+    private int  mTextColor;
     private Drawable gradientDrawable;
 
     public int[] getStates() {
-        return states;
+        return mStates;
     }
 
     public DrawableWrapper(int[] states, Drawable drawable) {
-        this.states = states;
+        this.mStates = states;
         this.gradientDrawable = drawable;
     }
 
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public void setTextColor(int mTextColor) {
+        this.mTextColor = mTextColor;
+    }
+
     public void setStates(int[] states) {
-        this.states = states;
+        this.mStates = states;
     }
 
     public Drawable getGradientDrawable() {

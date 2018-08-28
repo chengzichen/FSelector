@@ -55,7 +55,7 @@ public class RightDrawable extends GradientDrawable implements IDrawDelegate {
     }
 
 
-    public void setmPantWidth(float mPantWidth) {
+    public void setPantWidth(float mPantWidth) {
         this.mPantWidth = mPantWidth;
     }
 

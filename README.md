@@ -1,4 +1,4 @@
-# FSelector
+# [FSelector](https://github.com/chengzichen/FSelector)
 
 欢迎使用 Flyabbit  🔜 全家桶 
 
@@ -21,7 +21,7 @@ FSelector  quick get Selector  by no xml
 * 简易的整合,轻量级
 * 基本没有依赖于任何的三方库
 
-
+地址: [https://github.com/chengzichen/FSelector](https://github.com/chengzichen/FSelector)
 ----------
 
 ## 安装
@@ -51,7 +51,7 @@ FSelector  quick get Selector  by no xml
 **step2 添加依赖:**
 
 	dependencies {
-        	        implementation 'com.github.chengzichen:FSelector:release1.0.1'
+        	        implementation 'com.github.chengzichen:FSelector:release1.0.2'
         	}
 
 
@@ -62,28 +62,15 @@ FSelector  quick get Selector  by no xml
 
 
 <div >   
-		 <img src="http://thyrsi.com/t6/361/1535089756x1822611233.gif" width = "150" height = "240" alt="图片名称" align=cente/>
+ <img src="http://ae01.alicdn.com/kf/HTB1WWlVdi6guuRjy1Xd761AwpXa2.png" width = "320" height = "580" alt="图片名称" align=cente/>
+		 <img src="http://thyrsi.com/t6/364/1535448476x-1566688622.gif" width = "320" height = "580" alt="图片名称" align=cente/>
+		 
 </div>
 
 
 ## 用途
 - **圆角背景**
 
-	- Xml
-
-	```
-	 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-	     <corners
-	     android:bottomLeftRadius="15dp"
-	     android:bottomRightRadius="15dp"
-	     android:topLeftRadius="15dp"
-	     android:topRightRadius="15dp" />
-	     <solid android:color="@color/clr_fb720e" />
-	 </shape>
-	```
-
-	- **FSelector**:
- 
 	```
 	FSelector.with(tvtext1)
 	                .addDrawable().circleAngle(dp2px(15)).bgColor(getColors(R.color.clr_fb720e))
@@ -93,27 +80,8 @@ FSelector  quick get Selector  by no xml
 
 - **带边框的圆角背景**
 
-	- xml:
-
-	```
-	 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-	     <corners
-	     android:bottomLeftRadius="15dp"
-	     android:bottomRightRadius="15dp"
-	     android:topLeftRadius="15dp"
-	     android:topRightRadius="15dp" />
-	     <solid android:color="@color/clr_fb720e" />
-	     <size
-	     android:height="65dp"
-	     android:width="180dp" />
-	     <stroke
-	     android:width="2dp"
-	     android:color="@color/clr_f0f0f0" />
-	 </shape>
-	```
 
 
-	- **FSelector**:
 
 	```
 	FSelector.with(tvtext2)
@@ -122,39 +90,25 @@ FSelector  quick get Selector  by no xml
 	                .create()
 	                .bind();
 	```
+- **圆形背景**
 
+	```
+  FSelector.with(mTvSelectRoundBgText)
+                .addDrawable()
+                .shapeType(FSelector.OVAL)
+                .size(dp2px(80), dp2px(80))
+                .useLevel(true)
+                .stokeWidth(dp2px(2))
+                .strokeClr(getColors(R.color.colorPrimary))
+                .bgColor(getColors(R.color.clr_ff00d2e0))
+                .strokeDashWidth(dp2px(10))//虚线
+                .strokeDashGap(dp2px(5))//虚线
+                .create()
+                .bind();
+	```
 - **圆角选择器**
-	- xml
- 
-	```
- 	//圆角1
-     <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-     <corners
-     android:bottomLeftRadius="15dp"
-     android:bottomRightRadius="15dp"
-     android:topLeftRadius="15dp"
-     android:topRightRadius="15dp" />
-     <solid android:color="@color/clr_fb720e" />
-     </shape>
-
-     //圆角2
-     <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-     <corners
-     android:bottomLeftRadius="15dp"
-     android:bottomRightRadius="15dp"
-     android:topLeftRadius="15dp"
-     android:topRightRadius="15dp" />
-     <solid android:color="@color/clr_fb720e" />
-
-     </shape>
-      <selector xmlns:android="http://schemas.android.com/apk/res/android">
-     <item android:state_pressed="true" android:drawable="@drawable/shape1" />
-     <item android:state_pressed="false" android:drawable="@drawable/shape2" />
-     </selector>
 	
-	```
-	
-	- **FSelector**
+
 
 	```
 	  FSelector.with(tvtext3)
@@ -168,51 +122,8 @@ FSelector  quick get Selector  by no xml
 
 - **圆角带边框选择器**
 
-	- xml
+
 	
-	``` 
-	 //圆角带边框选择器
-	
-	 //圆角带边框1
-	 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-	 <corners
-	  android:bottomLeftRadius="15dp"
-	  android:bottomRightRadius="15dp"
-	  android:topLeftRadius="15dp"
-	  android:topRightRadius="15dp" />
-	  <solid android:color="@color/clr_fb720e" />
-	  <size
-	  android:height="65dp"
-	  android:width="180dp" />
-	  <stroke
-	  android:width="2dp"
-	  android:color="@color/clr_f0f0f0" />
-	  </shape>
-	
-	  //圆角带边框2
-	  <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-	  <corners
-	  android:bottomLeftRadius="15dp"
-	  android:bottomRightRadius="15dp"
-	  android:topLeftRadius="15dp"
-	  android:topRightRadius="15dp" />
-	  <solid android:color="@color/clr_fb720e" />
-	  <size
-	     android:height="65dp"
-	     android:width="180dp" />
-	  <stroke
-	     android:width="2dp"
-	     android:color="@color/clr_f0f0f0" />
-	     </shape>
-	 	//选择器
-	   <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	     <item android:state_pressed="true" android:drawable="@drawable/shape1" />
-	     <item android:state_pressed="false" android:drawable="@drawable/shape2" />
-	  </selector>
-	  
-	``` 
-   
-	- **FSelector**
 
 	 ``` 
 	  FSelector.with(tvtext4)
@@ -223,42 +134,8 @@ FSelector  quick get Selector  by no xml
 	                .bind();
 	 ``` 
 
-- 圆角虚线选择器
- 	
- 	- xml
-
-	```
-	  //bg1
-	  <shape xmlns:android="http://schemas.android.com/apk/res/android"
-	 android:shape="rectangle">
-	 <corners android:radius="20dip"/>
-	 <solid android:color="#00ff00"/>
-	 <stroke
-	 android:width="5dip"
-	 android:color="#FF4081"
-	 android:dashGap="5dip"
-	 android:dashWidth="10dip"/>
-	 //bg2
-	 </shape>
-	  <shape xmlns:android="http://schemas.android.com/apk/res/android"
-	 android:shape="rectangle">
-	 <corners android:radius="20dip"/>
-	 <solid android:color="#00ff00"/>
-	 <stroke
-	 android:width="5dip"
-	 android:color="#FF4081"
-	 android:dashGap="5dip"
-	 android:dashWidth="10dip"/>
-	 </shape>
-	//选择器
-	   <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	     <item android:state_pressed="true" android:drawable="@drawable/shape1" />
-	     <item android:state_pressed="false" android:drawable="@drawable/shape2" />
-	  </selector>
-	```
-
-
-	- **FSelector**
+- **圆角虚线选择器**
+ 
 
 	``` 
   FSelector.with(tvtext5)
@@ -275,10 +152,36 @@ FSelector  quick get Selector  by no xml
                 .create()
                 .bind();
 	``` 
- 
+- **圆形,背景色/边框色/字体色改变**
+	
+ ```
+   FSelector.with(mTvSelectRoundBgText)//mTvSelectRoundBgText 必需为 textview
+                .addDrawable()
+                .shapeType(FSelector.OVAL)
+                .size(dp2px(80), dp2px(80))
+                .useLevel(true)
+                .stokeWidth(dp2px(2))
+                .strokeClr(getColors(R.color.colorPrimary))
+                .bgColor(getColors(R.color.clr_ff00d2e0))
+                .strokeDashWidth(dp2px(10))//虚线
+                .strokeDashGap(dp2px(5))//虚线
+                .textStateColor(getColors(R.color.clr_FFFFFFFF))
+                .create()
+                .addDrawable(FSelector.State.STATE_PRESSED)
+                .shapeType(FSelector.OVAL)
+                .size(dp2px(80), dp2px(80))
+                .useLevel(true)
+                .stokeWidth(dp2px(2))
+                .strokeClr(getColors(R.color.clr_ff658598))
+                .bgColor(getColors(R.color.clr_ff00d2e0))
+                .strokeDashWidth(dp2px(10))//虚线
+                .strokeDashGap(dp2px(5))//虚线
+                .textStateColor(getColors(R.color.clr_6e6e6e))
+                .create()
+                .bind();
+ 	```
 - **自定义背景选择器(xml 无法实现)**
  
- 	- 背景带✔️的背景选择器
 
 	``` 
 	
@@ -294,7 +197,7 @@ FSelector  quick get Selector  by no xml
 	                .bind();
 	``` 
 
- 	 - 任何图片背景生成圆角
+- **任何图片背景生成圆角**
 
 	``` 
 	 RoundedBitmapDrawable shapeBitmapDrawable=    new RoundedBitmapDrawable();
@@ -312,16 +215,16 @@ FSelector  quick get Selector  by no xml
 	``` 
 	
 	
-- 创建一个选择器 Drawable 
+- **创建一个选择器 Drawable**
 
-```
+	```
 Drawable drawable= FSelector.with(tvtext4)
                 .addDrawable().circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_f6f6f6))
                 .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_cdcdcd)).create()
                 .addDrawable(STATE_PRESSED).circleAngle(dp2px(5)).bgColor(getColors(R.color.clr_fffcf7))
                 .stokeWidth(dp2px(1)).strokeClr(getColors(R.color.clr_fb720e)).create()
                 .build();
-```	
+	```	
 
 ### API说明
 ```	                
@@ -352,11 +255,18 @@ Drawable drawable= FSelector.with(tvtext4)
   12. strokeDashWidth()						//虚线中实线的长度
   13. strokeDashGap()						//虚线间隔的长度
   14. addState(int)  						//添加 drawabe 的状态,与 addDrawable(int type)覆盖互斥
+  15. shapeType(@Shape int shapeType)		//drawabe 类型  ,圆形,椭圆,矩形,线...
+  16. size(int width, int height)    		//设置宽高
+  17. useLevel(boolean useLevel)  			//是否使用标准圆
+  18. textStateColor(@ColorInt int textColor)//当前状态下的字体颜色,只有当 view 为 TextView 的时候才生效
   15. create()                           	//创建一个Drawable放入 shape or selector
   16. build()  								//返回一个Drawable 作为 shape or selector
   17. bind()  								//将返回的Drawable bind 到 view 中
  
 ```	
+
+  
+
 
 ## TODO
 
@@ -375,6 +285,7 @@ Drawable drawable= FSelector.with(tvtext4)
 
 - 1.0.0  : 正式版本1
 - 1.0.1  : 添加边框虚线
+- 1.0.2  : 添加椭圆,以及圆形,textview字体状态颜色,设置大小
 
 ## Flyabbit系列
 

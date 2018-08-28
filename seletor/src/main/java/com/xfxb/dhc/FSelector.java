@@ -1,14 +1,23 @@
 package com.xfxb.dhc;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.IntDef;
 import android.view.View;
+import android.widget.TextView;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.graphics.drawable.GradientDrawable.RECTANGLE;
 
 /**
  * 创建者     邓浩宸
@@ -22,6 +31,35 @@ public class FSelector {
     private View mView;
     private static DrawableBuilder builder;
     private static FSelector selector;
+    private int[] mTextcolors;
+    private int[][] mTextStates;
+    /**
+     * Shape is a rectangle, possibly with rounded corners
+     */
+    public static final int RECTANGLE = 0;
+
+    /**
+     * Shape is an ellipse
+     */
+    public static final int OVAL = 1;
+
+    /**
+     * Shape is a line
+     */
+    public static final int LINE = 2;
+
+    /**
+     * Shape is a ring.
+     */
+    public static final int RING = 3;
+
+    /**
+     * @hide
+     */
+    @IntDef({RECTANGLE, OVAL, LINE, RING})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Shape {
+    }
 
     public FSelector(View view) {
         mView = view;
@@ -92,9 +130,20 @@ public class FSelector {
             drawable = stateDrawableMap.get(0).getGradientDrawable();
         } else {
             StateListDrawable stateListDrawable = new StateListDrawable();
-            for (DrawableWrapper gradientDrawableWraper : stateDrawableMap) {
-                stateListDrawable.addState(gradientDrawableWraper.getStates(), gradientDrawableWraper.getGradientDrawable());
+            mTextStates = new int[stateDrawableMap.size()][];
+            mTextcolors = new int[stateDrawableMap.size()];
+            for (int i = 0; i < stateDrawableMap.size(); i++) {
+                DrawableWrapper gradientDrawableWrapper = stateDrawableMap.get(i);
+                stateListDrawable.addState(gradientDrawableWrapper.getStates(), gradientDrawableWrapper.getGradientDrawable());
+                if (mTextStates!=null&&mTextcolors!=null&&gradientDrawableWrapper.getTextColor() !=0){
+                    mTextStates[i] = gradientDrawableWrapper.getStates();
+                    mTextcolors[i] = gradientDrawableWrapper.getTextColor();
+                }else {
+                    mTextStates=null;
+                    mTextcolors=null;
+                }
             }
+
             drawable = stateListDrawable;
         }
         return drawable;
@@ -110,9 +159,16 @@ public class FSelector {
         } else {
             mView.setBackgroundDrawable(drawable);
         }
+        if (mView instanceof TextView) {
+            if (mTextStates != null && mTextStates.length > 0 && mTextcolors != null && mTextcolors.length > 0) {
+                ColorStateList colorStateList = new ColorStateList(mTextStates, mTextcolors);
+                ((TextView) mView).setTextColor(colorStateList);
+            }
+        }
+
     }
 
-    public class DrawableBuilder {
+    public static class DrawableBuilder {
 
         private DrawableWrapper gradientDrawableWrapper;
         private Drawable mStateDraw;
@@ -127,6 +183,11 @@ public class FSelector {
         private int mStrokeDashGap;
         private int mCircleAngle;
         private List<State> mState = new ArrayList<>();
+        private int mShapeType;
+        private int mWidth, mHeight;
+        private boolean mUseLevel;
+        private @ColorInt
+        int mTextStateColor;
 
         public DrawableBuilder(State state) {
             mState.add(state);
@@ -138,7 +199,8 @@ public class FSelector {
 
         /**
          * 设置  drawable
-         * @param drawable  自定义drawable
+         *
+         * @param drawable 自定义drawable
          * @return
          */
         public DrawableBuilder stateDraw(Drawable drawable) {
@@ -148,26 +210,29 @@ public class FSelector {
 
         /**
          * 当前 drawable 的显示状态
+         *
          * @param state
          * @return
          */
-            public DrawableBuilder addState(State state) {
+        public DrawableBuilder addState(State state) {
             this.mState.add(state);
             return this;
         }
 
         /**
          * 背景颜色
+         *
          * @param bgColor
          * @return
          */
-        public DrawableBuilder bgColor(int bgColor) {
+        public DrawableBuilder bgColor(@ColorInt int bgColor) {
             this.mBgColor = bgColor;
             return this;
         }
 
         /**
          * 左上角弧度
+         *
          * @param topLeftCA 值
          * @return
          */
@@ -178,16 +243,18 @@ public class FSelector {
 
         /**
          * 右上角弧度
-         * @param topRigthCA 值
+         *
+         * @param topRightCA 值
          * @return
          */
-        public DrawableBuilder topRigthCA(int topRigthCA) {
-            this.mTopRightCA = topRigthCA;
+        public DrawableBuilder topRightCA(int topRightCA) {
+            this.mTopRightCA = topRightCA;
             return this;
         }
 
         /**
-             * 左下角度
+         * 左下角度
+         *
          * @param btLeftCA 值
          * @return
          */
@@ -198,6 +265,7 @@ public class FSelector {
 
         /**
          * 右下角
+         *
          * @param btRightCA 值
          * @return
          */
@@ -208,7 +276,8 @@ public class FSelector {
 
         /**
          * 边框线的宽度
-         * @param stokeWidth  宽度
+         *
+         * @param stokeWidth 宽度
          * @return
          */
         public DrawableBuilder stokeWidth(int stokeWidth) {
@@ -218,17 +287,19 @@ public class FSelector {
 
         /**
          * 边框线的颜色
-         * @param strokeClr  颜色
+         *
+         * @param strokeClr 颜色
          * @return
          */
-        public DrawableBuilder strokeClr(int strokeClr) {
+        public DrawableBuilder strokeClr(@ColorInt int strokeClr) {
             this.mStrokeClr = strokeClr;
             return this;
         }
 
-        /**圆角弧度
+        /**
+         * 圆角弧度
          *
-         * @param circleAngle  弧度
+         * @param circleAngle 弧度
          * @return
          */
         public DrawableBuilder circleAngle(int circleAngle) {
@@ -238,6 +309,7 @@ public class FSelector {
 
         /**
          * 虚线中实线的长度
+         *
          * @param strokeDashWidth
          * @return
          */
@@ -248,11 +320,57 @@ public class FSelector {
 
         /**
          * 虚线间隔的长度
+         *
          * @param strokeDashGap
          * @return
          */
         public DrawableBuilder strokeDashGap(int strokeDashGap) {
             this.mStrokeDashGap = strokeDashGap;
+            return this;
+        }
+
+        /**
+         * shape 类型
+         *
+         * @param shapeType 圆形,线
+         * @return
+         */
+        public DrawableBuilder shapeType(@Shape int shapeType) {
+            this.mShapeType = shapeType;
+            return this;
+        }
+
+        /**
+         * shape 类型
+         *
+         * @param width, height  宽高
+         * @return
+         */
+        public DrawableBuilder size(int width, int height) {
+            this.mWidth = width;
+            this.mHeight = height;
+            return this;
+        }
+
+        /**
+         * shape 使用标准
+         *
+         * @param useLevel 使用标准
+         * @return
+         */
+        public DrawableBuilder useLevel(boolean useLevel) {
+            this.mUseLevel = useLevel;
+            return this;
+        }
+
+        /**
+         * 设置 text 的状态颜色
+         *
+         * @param textColor 只有当 view 为 TextView 的时候才生效
+         * @return
+         */
+        public DrawableBuilder textStateColor(@ColorInt int textColor) {
+            this.mTextStateColor = textColor;
             return this;
         }
 
@@ -264,18 +382,24 @@ public class FSelector {
                     mTopLeftCA != 0 ? mTopLeftCA : mCircleAngle,
                     mTopRightCA != 0 ? mTopRightCA : mCircleAngle,
                     mTopRightCA != 0 ? mTopRightCA : mCircleAngle,
-                    mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
-                    mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
                     mBtRightCA != 0 ? mBtRightCA : mCircleAngle,
-                    mBtRightCA != 0 ? mBtRightCA : mCircleAngle};
+                    mBtRightCA != 0 ? mBtRightCA : mCircleAngle,
+                    mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle,
+                    mBtLeftCA != 0 ? mBtLeftCA : mCircleAngle};
             if (mStateDraw == null) {
                 mStateDraw = new GradientDrawable();
             }
-            if (mStateDraw instanceof GradientDrawable){
+            if (mStateDraw instanceof GradientDrawable) {
                 ((GradientDrawable) mStateDraw).setCornerRadii(circleAngleArr);//圆角
-                ((GradientDrawable) mStateDraw).setColor(mBgColor != 0 ?mBgColor : 0); //背景色
+                ((GradientDrawable) mStateDraw).setColor(mBgColor != 0 ? mBgColor : 0); //背景色
+                if (mShapeType != RECTANGLE)
+                    ((GradientDrawable) mStateDraw).setShape(mShapeType);
+                if (mWidth != 0 && mHeight != 0)
+                    ((GradientDrawable) mStateDraw).setSize(mWidth, mHeight);
+                if (mUseLevel)
+                    ((GradientDrawable) mStateDraw).setUseLevel(mUseLevel);
                 if (mStokeWidth != 0 || mStrokeClr != 0) {
-                    (  (GradientDrawable) mStateDraw).setStroke(mStokeWidth, mStrokeClr != 0 ? mStrokeClr : 0,mStrokeDashWidth,mStrokeDashGap);
+                    ((GradientDrawable) mStateDraw).setStroke(mStokeWidth, mStrokeClr != 0 ? mStrokeClr : 0, mStrokeDashWidth, mStrokeDashGap);
                 }
             }
             //边框宽度，边框颜色
@@ -284,6 +408,8 @@ public class FSelector {
                 states[i] = mState.get(i).getValue();
             }
             gradientDrawableWrapper = new DrawableWrapper(states, mStateDraw);
+            if (mTextStateColor != 0)
+                gradientDrawableWrapper.setTextColor(mTextStateColor);
             selector.stateDrawableMap.add(states.length == 0 ? selector.stateDrawableMap.size() : 0, gradientDrawableWrapper);
             return selector;
         }
