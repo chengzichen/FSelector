@@ -17,9 +17,11 @@ FSelector  quick get Selector  by no xml
 
 ## 功能
 
-* 快速，高效，低耗
-* 简易的整合,轻量级
+* 减少shape和selector文件
+* 快速，高效，低耗,无入侵，精小
+* 简易的整合,轻量级,高扩展
 * 基本没有依赖于任何的三方库
+* 包括了xml所能做到的大部分功能，也添加了部分xml不能实现的功能。
 
 地址: [https://github.com/chengzichen/FSelector](https://github.com/chengzichen/FSelector)
 ----------
