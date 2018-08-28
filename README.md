@@ -58,10 +58,10 @@ FSelector  quick get Selector  by no xml
 ---------
 
 ## 效果
+		
+> 左边是Shape 右边是 Selector
 
-
-
-<div >   
+<div > 
  <img src="http://ae01.alicdn.com/kf/HTB1WWlVdi6guuRjy1Xd761AwpXa2.png" width = "320" height = "580" alt="图片名称" align=cente/>
 		 <img src="http://thyrsi.com/t6/364/1535448476x-1566688622.gif" width = "320" height = "580" alt="图片名称" align=cente/>
 		 
@@ -155,7 +155,7 @@ FSelector  quick get Selector  by no xml
 - **圆形,背景色/边框色/字体色改变**
 	
  ```
-   FSelector.with(mTvSelectRoundBgText)//mTvSelectRoundBgText 必需为 textview
+  FSelector.with(mTvSelectRoundBgText)//mTvSelectRoundBgText 必需为 textview
                 .addDrawable()
                 .shapeType(FSelector.OVAL)
                 .size(dp2px(80), dp2px(80))
@@ -179,7 +179,7 @@ FSelector  quick get Selector  by no xml
                 .textStateColor(getColors(R.color.clr_6e6e6e))
                 .create()
                 .bind();
- 	```
+ ```
 - **自定义背景选择器(xml 无法实现)**
  
 
