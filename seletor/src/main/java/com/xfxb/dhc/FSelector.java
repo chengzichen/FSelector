@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +27,11 @@ import static android.graphics.drawable.GradientDrawable.RECTANGLE;
  */
 
 public class FSelector {
-    private Context mContext;
     private List<DrawableWrapper> stateDrawableMap = new ArrayList<>();
-    private View mView;
-    private static DrawableBuilder builder;
-    private static FSelector selector;
+    private WeakReference<View> mView;
+    private WeakReference<Context> mContext;
+    private static volatile  DrawableBuilder builder;
+    private static volatile FSelector selector;
     private int[] mTextcolors;
     private int[][] mTextStates;
     /**
@@ -62,12 +63,11 @@ public class FSelector {
     }
 
     public FSelector(View view) {
-        mView = view;
-        mContext = view.getContext();
+        mView=new WeakReference<View>(view);
     }
 
     public FSelector(Context context) {
-        mContext = context;
+        mContext=new WeakReference<>(context);
     }
 
 
@@ -150,19 +150,19 @@ public class FSelector {
     }
 
     public void bind() {
-        if (mView == null) {
+        if (mView.get() == null) {
             throw new IllegalArgumentException("You cannot start a with on a null View");
         }
         Drawable drawable = build();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            mView.setBackground(drawable);
+            mView.get().setBackground(drawable);
         } else {
-            mView.setBackgroundDrawable(drawable);
+            mView.get().setBackgroundDrawable(drawable);
         }
-        if (mView instanceof TextView) {
+        if (mView.get() instanceof TextView) {
             if (mTextStates != null && mTextStates.length > 0 && mTextcolors != null && mTextcolors.length > 0) {
                 ColorStateList colorStateList = new ColorStateList(mTextStates, mTextcolors);
-                ((TextView) mView).setTextColor(colorStateList);
+                ((TextView) mView.get()).setTextColor(colorStateList);
             }
         }
 
